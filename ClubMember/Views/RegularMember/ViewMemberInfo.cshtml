@@ -1,0 +1,35 @@
+﻿@model WebDesignTest.Models.RegularMember
+
+@{
+    ViewBag.Title = "ViewMemberInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ViewMemberInfo</h2>
+
+<div>
+    <h4>RegularMember</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.firstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.firstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lastName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditMemberInfo", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
