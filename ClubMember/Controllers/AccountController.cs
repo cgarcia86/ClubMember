@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ClubMember.Models;
+using WebDesignTest.Models;
+using System.Runtime.Caching;
+using System.Collections.Generic;
 
 namespace ClubMember.Controllers
 {
@@ -18,9 +21,19 @@ namespace ClubMember.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
-        {
-        }
+        //Cache to save user info
+        ObjectCache cacheSlot = MemoryCache.Default;
+        List<RegularMember> listRegMembers;
+
+    public AccountController()
+    {
+            listRegMembers = cacheSlot["listRegMembers"] as List<RegularMember>;
+
+            if (listRegMembers == null)
+            {
+                listRegMembers = new List<RegularMember>();
+            }
+    }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
@@ -149,19 +162,34 @@ namespace ClubMember.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+            RegularMember member = new RegularMember();
+
+            member.firstName = model.FirstName;
+            member.lastName = model.LastName;
+
+            member.ID = Guid.NewGuid().ToString();
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { 
                     UserName = model.Email, 
                     Email = model.Email,
+
                     FirstName = model.FirstName,
                     LastName = model.LastName
+
                 };
+
                 var result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
+                    //Saver member Info to Cache
+                    listRegMembers.Add(member);
+                    cacheSlot["listRegMembers"] = listRegMembers;
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

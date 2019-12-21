@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ClubMember.Models
@@ -81,9 +82,13 @@ namespace ClubMember.Models
         public string ConfirmPassword { get; set; }
 
         [Required]
+        [StringLength(15, ErrorMessage = "Your First Name is too long, please check.")]
+        [DisplayName("First Name")]
         public string FirstName { get; set; }
 
         [Required]
+        [StringLength(15, ErrorMessage = "Your Last Name is too long, please check.")]
+        [DisplayName("Last Name")]
         public string LastName { get; set; }
     }
 
