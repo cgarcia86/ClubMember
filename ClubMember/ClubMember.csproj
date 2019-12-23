@@ -246,6 +246,8 @@
     <Content Include="Views\RegularMember\AddRegularMember.cshtml" />
     <Content Include="Views\RegularMember\EditMemberInfo.cshtml" />
     <Content Include="Views\RegularMember\DeleteRegMember.cshtml" />
+    <Content Include="Views\RegularMember\Success.cshtml" />
+    <Content Include="Views\RegularMember\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

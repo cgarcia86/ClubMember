@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web;
@@ -28,9 +29,54 @@ namespace WebDesignTest.Controllers
         {
             cacheSlot["listRegMembers"] = listRegMembers;
         }
+
+        //Get User List from Data Base
+        public void GetUserList()
+        {
+            
+            SqlConnection DbConnect = new SqlConnection();
+            SqlCommand DbCommand = new SqlCommand();
+            SqlDataReader DbReader;
+
+            DbConnect.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=aspnet-ClubMember-20191219041643;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+
+            DbConnect.Open();
+
+           
+            DbCommand.Connection = DbConnect;
+            DbCommand.CommandText = "Select FirstName, LastName from dbo.AspNetUsers";
+            DbReader = DbCommand.ExecuteReader();
+
+           //var result =  DbReader.GetValues();
+
+            if(DbReader.HasRows)
+            {
+                
+                while(DbReader.Read())
+                {
+                    RegularMember member = new RegularMember();
+
+                    member.firstName = DbReader.GetString(0);
+                    member.lastName = DbReader.GetString(1);
+
+                    //Saver member Info to Cache
+                    listRegMembers.Add(member);
+                    cacheSlot["listRegMembers"] = listRegMembers;
+
+                }
+                
+            }
+            else
+            {
+                RedirectToAction("Error");
+                Console.WriteLine("Error");
+            }
+        }
         // GET: RegularMember
         public ActionResult Index()
         {
+            if(cacheSlot["listRegMembers"] == null)
+                GetUserList();
 
             return View(listRegMembers);
 
