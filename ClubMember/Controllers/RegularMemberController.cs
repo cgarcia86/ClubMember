@@ -184,7 +184,7 @@ namespace WebDesignTest.Controllers
                 //Changes to DB
                 if (!UpdateMemberfromDB(member, id))
                 {
-                    //return HttpNotFound();
+                    return HttpNotFound();
                 }
 
                 return RedirectToAction("Index");
