@@ -19,8 +19,6 @@ namespace WebDesignTest.Controllers
         SqlCommand DbCommand = new SqlCommand();
         SqlDataReader DbReader;
 
-        
-
         public RegularMemberController()
         {
             listRegMembers = cacheSlot["listRegMembers"] as List<RegularMember>;
@@ -43,7 +41,7 @@ namespace WebDesignTest.Controllers
 
             DbConnect.Open();
             DbCommand.Connection = DbConnect;
-            DbCommand.CommandText = "Select Id, FirstName, LastName from dbo.AspNetUsers";
+            DbCommand.CommandText = "Select Id, FirstName, LastName, Email, AccStatus from dbo.AspNetUsers";
             DbReader = DbCommand.ExecuteReader();
 
             if(DbReader.HasRows)
@@ -56,12 +54,16 @@ namespace WebDesignTest.Controllers
                     member.ID = DbReader.GetString(0);
                     member.firstName = DbReader.GetString(1);
                     member.lastName = DbReader.GetString(2);
+                    member.MemberEmail = DbReader.GetString(3);
+                    member.AccStatus = DbReader.GetString(4);
 
-                    //Saver member Info to Cache
+                    //Save member Info to Cache
                     listRegMembers.Add(member);
-                    cacheSlot["listRegMembers"] = listRegMembers;
+                    
                 }
-                
+
+                cacheSlot["listRegMembers"] = listRegMembers;
+
             }
             //else
             //{
@@ -77,18 +79,20 @@ namespace WebDesignTest.Controllers
             DbConnect.Open();
             DbCommand.Connection = DbConnect;
             DbCommand.CommandText = "Update dbo.AspNetUsers " +
-                "                    set FirstName = '" + member.firstName +
-                                     "', LastName = '"+ member.lastName +"' where Id = '"+id +"';";
+                                    "set FirstName = '" + member.firstName +
+                                     "', LastName = '"+ member.lastName +
+                                     "', Email = '"+ member.MemberEmail +
+                                     "', AccStatus = '" + member.AccStatus +
+                                     "' where Id = '" +id +"';";
+
             DbReader = DbCommand.ExecuteReader();
 
-            if (DbReader.Read())
-            {
+            if (DbReader.RecordsAffected > 0)
                 return (true);
-            }
+            
             else
-            {
                 return (false);
-            }
+            
         }
 
         public bool DeleteMemberfromDB(string id)
@@ -100,14 +104,12 @@ namespace WebDesignTest.Controllers
             DbCommand.CommandText = "Delete from dbo.AspNetUsers where Id = '" + id + "';";
             DbReader = DbCommand.ExecuteReader();
 
-            if (DbReader.Read())
-            {
+            if (DbReader.RecordsAffected > 0)
                 return (true);
-            }
+
             else
-            {
                 return (false);
-            }
+
         }
         // GET: RegularMember
         public ActionResult Index()
@@ -179,6 +181,8 @@ namespace WebDesignTest.Controllers
                 //Changes to Cache
                 memberToEdit.firstName = member.firstName;
                 memberToEdit.lastName = member.lastName;
+                memberToEdit.MemberEmail = member.MemberEmail;
+                memberToEdit.AccStatus = member.AccStatus;
                 SavecacheSlot();
 
                 //Changes to DB

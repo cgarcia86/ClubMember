@@ -164,9 +164,12 @@ namespace ClubMember.Controllers
         {
             RegularMember member = new RegularMember();
 
+            model.AccStatus = "Disable";
+
             member.firstName = model.FirstName;
             member.lastName = model.LastName;
-
+            member.MemberEmail = model.Email;
+            member.AccStatus = model.AccStatus;
             member.ID = Guid.NewGuid().ToString();
 
             if (ModelState.IsValid)
@@ -176,8 +179,9 @@ namespace ClubMember.Controllers
                     Email = model.Email,
 
                     FirstName = model.FirstName,
-                    LastName = model.LastName
-
+                    LastName = model.LastName,
+                    AccStatus = model.AccStatus
+                   
                 };
 
                 var result = await UserManager.CreateAsync(user, model.Password);

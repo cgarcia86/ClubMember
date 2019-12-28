@@ -90,6 +90,10 @@ namespace ClubMember.Models
         [StringLength(15, ErrorMessage = "Your Last Name is too long, please check.")]
         [DisplayName("Last Name")]
         public string LastName { get; set; }
+
+
+        [DisplayName("Account Status")]
+        public string AccStatus { get; set; }
     }
 
     public class ResetPasswordViewModel

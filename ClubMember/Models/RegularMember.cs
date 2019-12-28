@@ -21,7 +21,21 @@ namespace WebDesignTest.Models
         [DisplayName("Last Name")]
         public string lastName { get; set; }
 
+        [DisplayName("Member Email")]
+        public string MemberEmail { get; set; }
+
+        [DisplayName("Account Status")]
+        public string AccStatus { get; set; }
+
+
+        public RegularMember()
+        {
+           this.AccStatus = "DISABLE";
+        }
+
     }
+
+   
 
 
 }
