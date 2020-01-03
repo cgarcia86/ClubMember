@@ -25,6 +25,8 @@ namespace ClubMember.Controllers
         ObjectCache cacheSlot = MemoryCache.Default;
         List<RegularMember> listRegMembers;
 
+        BundleConfig Bconfig = new BundleConfig();
+
     public AccountController()
     {
             listRegMembers = cacheSlot["listRegMembers"] as List<RegularMember>;
@@ -71,6 +73,7 @@ namespace ClubMember.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
+
             return View();
         }
 
@@ -92,6 +95,8 @@ namespace ClubMember.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
+                    //Set User Page Template
+                    Bconfig.SetTemplate(1);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

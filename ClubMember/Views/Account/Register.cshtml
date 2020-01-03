@@ -12,11 +12,11 @@
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
-    <div class="jumbotron">
+    <div class="jumbotron " style="background-color:rgba(0,0,0,0.3)">
 
-        <div class="form-group" style="align-content:center">
+        <div class="form-group text-center">
             @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
+            <div class="col-md-10 text-center">
                 @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
             </div>
         </div>
