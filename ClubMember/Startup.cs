@@ -29,10 +29,18 @@ namespace ClubMember
                 roleManager.Create(role);
             }
 
+            //Create RegMember Role
+            if (!roleManager.RoleExists("RegMember"))
+            {
+                var role = new IdentityRole("RegMember");
+                roleManager.Create(role);
+            }
+
             //Create Default User
             var user = new ApplicationUser();
             user.UserName = "Admin@ClubMember.com";
             user.Email = "Admin@ClubMember.com";
+           
 
             string pwd = "$pasWD567*";
 

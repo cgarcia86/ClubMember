@@ -1,6 +1,6 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 
-@if (Request.IsAuthenticated)
+@if (Request.IsAuthenticated && User.IsInRole("SuperAdmin"))
 {
-    <li>@Html.ActionLink("MemberList", "Index", "RegularMember")</li>
+    <li>@Html.ActionLink("MemberList", "Index", "Admin")</li>
 }

@@ -5,26 +5,43 @@
 }
 
 
-<div class="jumbotron text-center" style="background-color:rgba(0,0,0,0.5); margin-top:15px">
-    <h1>Your Club Member</h1>
-    <p class="lead text-success">Welcome  @User.Identity.GetUserName().</p>
-    <p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>
-</div>
+    <div class="jumbotron text-center" style="background-color:rgba(0,0,0,0.5); margin-top:15px">
+        <h1>Your Club Member</h1>
+        <p class="lead text-success">Welcome  @User.Identity.GetUserName().</p>
+        @{
+            if (!Request.IsAuthenticated)
+            {
+                <p class="btn btn-default">@Html.ActionLink("LOGIN", "Login", "Account")</p>
+                <p class="btn btn-default">@Html.ActionLink("REGISTER", "Register", "Account")</p>
+            }
+        }
 
-<div class="row" style="background-color:rgba(0,0,0,0.4)">
-    <div class="col-md-4">
-        <h2>User Profile</h2>
-        <p>See you profile Information.</p>
-        <p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>
+
     </div>
-    <div class="col-md-4">
-        <h2>Your Club Settings</h2>
-        <p>Edit your home Background ,Colors, Etc.</p>
-        <p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>
-    </div>
-    <div class="col-md-4">
-        <h2>Menu Item 3</h2>
-        <p>Info Here.</p>
-        <p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>
-    </div>
-</div>
+
+@{
+    if (Request.IsAuthenticated && !User.IsInRole("SuperAdmin"))
+    {
+        <div class="row" style="background-color:rgba(0,0,0,0.4)">
+            <div class="col-md-4">
+                <h2>User Profile</h2>
+                <p>See you profile Information.</p>
+                <p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>
+            </div>
+            <div class="col-md-4">
+                <h2>Your Club Settings</h2>
+                <p>Edit your home Background ,Colors, Etc.</p>
+                <p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>
+            </div>
+            <div class="col-md-4">
+                <h2>Menu Item 3</h2>
+                <p>Info Here.</p>
+                <p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>
+            </div>
+        </div>
+    }
+    else if(Request.IsAuthenticated && User.IsInRole("SuperAdmin"))
+    {
+        @Html.Partial("_AdminMenuPartial")
+    }
+}

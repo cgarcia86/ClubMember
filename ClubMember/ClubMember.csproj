@@ -261,6 +261,8 @@
     <Content Include="Views\RegularMember\Error.cshtml" />
     <Content Include="Views\Shared\_MemberListPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Home\_AdminMenuPartial.cshtml" />
+    <Content Include="Views\Admin\AssignRole.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
