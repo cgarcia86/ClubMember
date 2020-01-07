@@ -171,6 +171,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HomePageSettingsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RegularMemberController.cs" />
     <Compile Include="Global.asax.cs">
@@ -186,6 +187,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\HomePageSettings.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RegularMember.cs" />
@@ -255,7 +257,7 @@
     <Content Include="Views\RegularMember\ViewMemberInfo.cshtml" />
     <Content Include="Views\RegularMember\Index.cshtml" />
     <Content Include="Views\RegularMember\AddRegularMember.cshtml" />
-    <Content Include="Views\RegularMember\EditMemberInfo.cshtml" />
+    <Content Include="Views\Admin\EditMemberInfo.cshtml" />
     <Content Include="Views\RegularMember\DeleteRegMember.cshtml" />
     <Content Include="Views\RegularMember\Success.cshtml" />
     <Content Include="Views\RegularMember\Error.cshtml" />
@@ -266,6 +268,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\HomePageSettings\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

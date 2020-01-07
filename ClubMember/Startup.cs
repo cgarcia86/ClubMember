@@ -13,6 +13,7 @@ namespace ClubMember
         {
             ConfigureAuth(app);
             CreateUserAndRoles();
+            LoadHomePageSettings();
         }
 
         public void CreateUserAndRoles()
@@ -51,5 +52,14 @@ namespace ClubMember
                 userManager.AddToRole(user.Id, "SuperAdmin");
             }
         }
+
+        public void LoadHomePageSettings()
+        {
+            HomePageSettings HPsettings = new HomePageSettings();
+
+            HPsettings.BgImage = "../../Content/bgimg.jpg";
+            HPsettings.HomePageName = "Home";
+        }
+
     }
 }
