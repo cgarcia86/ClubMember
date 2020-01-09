@@ -13,7 +13,7 @@ namespace ClubMember
         {
             ConfigureAuth(app);
             CreateUserAndRoles();
-            LoadHomePageSettings();
+            
         }
 
         public void CreateUserAndRoles()
@@ -53,13 +53,6 @@ namespace ClubMember
             }
         }
 
-        public void LoadHomePageSettings()
-        {
-            HomePageSettings HPsettings = new HomePageSettings();
-
-            HPsettings.BgImage = "../../Content/bgimg.jpg";
-            HPsettings.HomePageName = "Home";
-        }
-
+       
     }
 }

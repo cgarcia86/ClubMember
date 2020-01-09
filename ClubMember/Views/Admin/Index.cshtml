@@ -1,7 +1,4 @@
-﻿@model IEnumerable<WebDesignTest.Models.RegularMember>
-
-
-
+﻿@model IEnumerable<ClubMember.Models.ApplicationUser>
 
 @{
     ViewBag.Title = "Index";
@@ -10,19 +7,20 @@
 
 <h2>Manage Club Members </h2>
 
+
 <p>
     @Html.ActionLink("Create New", "AddRegularMember")
 </p>
 <table class="table table-hover table-bordered" style="background-color:rgba(0,0,0,0.3)">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.firstName)
+            @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.lastName)
+            @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.MemberEmail)
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.AccStatus)
@@ -34,13 +32,13 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.firstName)
+                @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.lastName)
+                @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.MemberEmail)
+                @Html.DisplayFor(modelItem => item.Email)
             </td>
             @{
                 if (item.AccStatus == "Enable")
@@ -58,9 +56,9 @@
             }
 
             <td>
-                @Html.ActionLink("Edit", "EditMemberInfo", new { id = item.ID }) |
-                @Html.ActionLink("Details", "ViewMemberInfo", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "DeleteRegMember", new { id = item.ID })
+                @Html.ActionLink("Edit", "EditMemberInfo", new { id = item.Id }) |
+                @Html.ActionLink("Details", "ViewMemberInfo", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteRegMember", new { id = item.Id })
             </td>
         </tr>
     }

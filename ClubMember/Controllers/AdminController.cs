@@ -39,44 +39,6 @@ namespace ClubMember.Controllers
             cacheSlot["listRegMembers"] = listRegMembers;
         }
 
-        //Get User List from Data Base
-        public void LoadUserListfromDB()
-        {
-            DbConnect.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=aspnet-ClubMember-20191219041643;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-            DbConnect.Open();
-            DbCommand.Connection = DbConnect;
-            DbCommand.CommandText = "Select Id, FirstName, LastName, Email, AccStatus from dbo.AspNetUsers";
-            DbReader = DbCommand.ExecuteReader();
-
-            if (DbReader.HasRows)
-            {
-
-                while (DbReader.Read())
-                {
-                    RegularMember member = new RegularMember();
-
-                    member.ID = DbReader.GetString(0);
-                    member.firstName = DbReader.GetString(1);
-                    member.lastName = DbReader.GetString(2);
-                    member.MemberEmail = DbReader.GetString(3);
-                    member.AccStatus = DbReader.GetString(4);
-
-                    //Save member Info to Cache
-                    listRegMembers.Add(member);
-
-                }
-
-                cacheSlot["listRegMembers"] = listRegMembers;
-
-            }
-            //else
-            //{
-            //    RedirectToAction("Error");
-            //    Console.WriteLine("Error");
-            //}
-        }
-
         public bool UpdateMemberfromDB(RegularMember member, string id)
         {
             DbConnect.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=aspnet-ClubMember-20191219041643;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
@@ -120,11 +82,7 @@ namespace ClubMember.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            if (cacheSlot["listRegMembers"] == null)
-                LoadUserListfromDB();
-
-            return View(listRegMembers);
-            
+            return View(context.Users.ToList());
         }
 
         public ActionResult AddRegularMember()
