@@ -1,6 +1,7 @@
 ﻿using ClubMember.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -15,74 +16,14 @@ namespace ClubMember.Controllers
     [Authorize(Roles = "SuperAdmin")]
     public class AdminController : Controller
     {
-        ObjectCache cacheSlot = MemoryCache.Default;
-        List<RegularMember> listRegMembers;
-
+       
         ApplicationDbContext context = new ApplicationDbContext();
-
-        SqlConnection DbConnect = new SqlConnection();
-        SqlCommand DbCommand = new SqlCommand();
-        SqlDataReader DbReader;
-
-        public AdminController()
-        {
-            listRegMembers = cacheSlot["listRegMembers"] as List<RegularMember>;
-
-            if (listRegMembers == null)
-            {
-                listRegMembers = new List<RegularMember>();
-            }
-        }
-
-        public void SavecacheSlot()
-        {
-            cacheSlot["listRegMembers"] = listRegMembers;
-        }
-
-        public bool UpdateMemberfromDB(RegularMember member, string id)
-        {
-            DbConnect.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=aspnet-ClubMember-20191219041643;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-            DbConnect.Open();
-            DbCommand.Connection = DbConnect;
-            DbCommand.CommandText = "Update dbo.AspNetUsers " +
-                                    "set FirstName = '" + member.firstName +
-                                     "', LastName = '" + member.lastName +
-                                     "', Email = '" + member.MemberEmail +
-                                     "', AccStatus = '" + member.AccStatus +
-                                     "' where Id = '" + id + "';";
-
-            DbReader = DbCommand.ExecuteReader();
-
-            if (DbReader.RecordsAffected > 0)
-                return (true);
-
-            else
-                return (false);
-
-        }
-
-        public bool DeleteMemberfromDB(string id)
-        {
-            DbConnect.ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=aspnet-ClubMember-20191219041643;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-            DbConnect.Open();
-            DbCommand.Connection = DbConnect;
-            DbCommand.CommandText = "Delete from dbo.AspNetUsers where Id = '" + id + "';";
-            DbReader = DbCommand.ExecuteReader();
-
-            if (DbReader.RecordsAffected > 0)
-                return (true);
-
-            else
-                return (false);
-
-        }
 
         // GET: Admin
         public ActionResult Index()
         {
-            return View(context.Users.ToList());
+            var usersList = context.Users;
+            return View(usersList);
         }
 
         public ActionResult AddRegularMember()
@@ -94,8 +35,8 @@ namespace ClubMember.Controllers
         public ActionResult AddRegularMember(RegularMember member)
         {
             member.ID = Guid.NewGuid().ToString();
-            listRegMembers.Add(member);
-            SavecacheSlot();
+            //listRegMembers.Add(member);
+            //SavecacheSlot();
 
             return RedirectToAction("Index");
         }
@@ -103,7 +44,7 @@ namespace ClubMember.Controllers
         public ActionResult ViewMemberInfo(string id)
         {
             //Find member with specific ID
-            RegularMember member = listRegMembers.FirstOrDefault(c => c.ID == id);
+            ApplicationUser member = context.Users.Find(id);
 
             if (member == null)
             {
@@ -113,12 +54,13 @@ namespace ClubMember.Controllers
             {
                 return View(member);
             }
-
+            
         }
 
         public ActionResult EditMemberInfo(string id)
         {
-            RegularMember member = listRegMembers.FirstOrDefault(c => c.ID == id);
+
+            ApplicationUser member = context.Users.Find(id);
 
             if (member == null)
             {
@@ -131,10 +73,10 @@ namespace ClubMember.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditMemberInfo(RegularMember member, string id)
+        public ActionResult EditMemberInfo(ApplicationUser member, string id)
         {
-            var memberToEdit = listRegMembers.FirstOrDefault(c => c.ID == id);
-            //RegularMember memberToEdit = listRegMembers.FirstOrDefault(c => c.ID == id);
+            
+           ApplicationUser memberToEdit = context.Users.Find(id);
 
             if (memberToEdit == null)
             {
@@ -142,18 +84,13 @@ namespace ClubMember.Controllers
             }
             else
             {
-                //Changes to Cache
-                memberToEdit.firstName = member.firstName;
-                memberToEdit.lastName = member.lastName;
-                memberToEdit.MemberEmail = member.MemberEmail;
-                memberToEdit.AccStatus = member.AccStatus;
-                SavecacheSlot();
 
-                //Changes to DB
-                if (!UpdateMemberfromDB(member, id))
-                {
-                    return HttpNotFound();
-                }
+                memberToEdit.FirstName = member.FirstName;
+                memberToEdit.LastName = member.LastName;
+                memberToEdit.Email = member.Email;
+                memberToEdit.AccStatus = member.AccStatus;
+
+                context.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -162,7 +99,7 @@ namespace ClubMember.Controllers
         //Show Delete Confirmation Page
         public ActionResult DeleteRegMember(string id)
         {
-            RegularMember member = listRegMembers.FirstOrDefault(c => c.ID == id);
+            ApplicationUser member = context.Users.Find(id);
 
             if (member == null)
             {
@@ -172,6 +109,7 @@ namespace ClubMember.Controllers
             {
                 return View(member);
             }
+
         }
 
         [HttpPost]
@@ -179,23 +117,18 @@ namespace ClubMember.Controllers
         //Delete Regular Member
         public ActionResult ConfirmDeleteRegMember(string id)
         {
-            RegularMember member = listRegMembers.FirstOrDefault(c => c.ID == id);
+            ApplicationUser memberToDelete = context.Users.Find(id);
 
-            if (member == null)
+            if (memberToDelete == null)
             {
                 return HttpNotFound();
             }
             else
             {
-                //Changes to Cache
-                listRegMembers.Remove(member);
-
-                //Changes to DB
-                if (!DeleteMemberfromDB(id))
-                {
-                    //return HttpNotFound();
-                }
+                context.Users.Remove(memberToDelete);
+                context.SaveChanges();
                 return RedirectToAction("Index");
+               
             }
         }
 

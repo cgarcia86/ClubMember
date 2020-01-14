@@ -1,4 +1,4 @@
-﻿@model WebDesignTest.Models.RegularMember
+﻿@model ClubMember.Models.ApplicationUser
 
 @{
     ViewBag.Title = "ViewMemberInfo";
@@ -12,24 +12,24 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.firstName)
+            @Html.DisplayNameFor(model => model.FirstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.firstName)
+            @Html.DisplayFor(model => model.FirstName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.lastName)
+            @Html.DisplayNameFor(model => model.LastName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.lastName)
+            @Html.DisplayFor(model => model.LastName)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "EditMemberInfo", new { id = Model.ID }) |
+    @Html.ActionLink("Edit", "EditMemberInfo", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
