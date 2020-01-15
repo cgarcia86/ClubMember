@@ -55,11 +55,14 @@
                 }
             }
 
-            <td>
-                @Html.ActionLink("Edit", "EditMemberInfo", new { id = item.Id }) |
-                @Html.ActionLink("Details", "ViewMemberInfo", new { id = item.Id }) |
+        <td>
+            <button type="button" class="btn btn-sm btn-warning">
+                @Html.ActionLink("Edit", "EditMemberInfo", new { id = item.Id })
+            </button>
+            <button type="button" class="btn btn-sm btn-danger">
                 @Html.ActionLink("Delete", "DeleteRegMember", new { id = item.Id })
-            </td>
+            </button>
+        </td>
         </tr>
     }
 

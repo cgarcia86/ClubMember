@@ -227,6 +227,7 @@
     <Compile Include="Models\RegularMember.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\RegUsrProfileViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bgimg.jpg" />
@@ -289,12 +290,9 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\ViewMemberInfo.cshtml" />
-    <Content Include="Views\RegularMember\Index.cshtml" />
     <Content Include="Views\Admin\AddRegularMember.cshtml" />
     <Content Include="Views\Admin\EditMemberInfo.cshtml" />
     <Content Include="Views\Admin\DeleteRegMember.cshtml" />
-    <Content Include="Views\RegularMember\Success.cshtml" />
-    <Content Include="Views\RegularMember\Error.cshtml" />
     <Content Include="Views\Shared\_MemberListPartial.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Home\_AdminMenuPartial.cshtml" />
@@ -303,6 +301,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\HomePageSettings\" />
+    <Folder Include="Views\RegularMember\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

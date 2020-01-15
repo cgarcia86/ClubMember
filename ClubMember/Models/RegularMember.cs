@@ -5,32 +5,19 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace WebDesignTest.Models
+namespace ClubMember.Models
 {
     public class RegularMember
     {
-        public string ID { get; set; }
+        public string id { get; set; }
 
-        [Required]
-        [StringLength(15, ErrorMessage = "Your First Name is too long, please check.")]
-        [DisplayName("First Name")]
-        public string firstName { get; set; }
-
-        [Required]
-        [StringLength(15, ErrorMessage = "Your Last Name is too long, please check.")]
-        [DisplayName("Last Name")]
-        public string lastName { get; set; }
-
-        [DisplayName("Member Email")]
-        public string MemberEmail { get; set; }
-
-        [DisplayName("Account Status")]
-        public string AccStatus { get; set; }
+        public string profilePic { get; set; }
+        public DateTime BirthDate { get; set; }
 
 
         public RegularMember()
         {
-           this.AccStatus = "DISABLE";
+           
         }
 
     }

@@ -167,19 +167,11 @@ namespace ClubMember.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            RegularMember member = new RegularMember();
-
-            model.AccStatus = "Disable";
-
-            member.firstName = model.FirstName;
-            member.lastName = model.LastName;
-            member.MemberEmail = model.Email;
-            member.AccStatus = model.AccStatus;
-            member.ID = Guid.NewGuid().ToString();
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { 
+                var user = new ApplicationUser 
+                { 
                     UserName = model.Email, 
                     Email = model.Email,
 
@@ -194,10 +186,6 @@ namespace ClubMember.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
-                    //Saver member Info to Cache
-                    listRegMembers.Add(member);
-                    cacheSlot["listRegMembers"] = listRegMembers;
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

@@ -11,13 +11,17 @@
         @{
             if (!Request.IsAuthenticated)
             {
-                <p class="btn btn-default">@Html.ActionLink("LOGIN", "Login", "Account")</p>
-                <p class="btn btn-default">@Html.ActionLink("REGISTER", "Register", "Account")</p>
+                <button type="button" class="btn btn-lg btn-success">
+                    @Html.ActionLink("LOGIN", "Login", "Account")
+                </button>
+                <button type="button" class="btn btn-lg btn-primary">
+                    @Html.ActionLink("REGISTER", "Register", "Account")
+                </button>
             }
-        }
+         }
 
 
-    </div>
+</div>
 
 @{
     if (Request.IsAuthenticated && !User.IsInRole("SuperAdmin"))
