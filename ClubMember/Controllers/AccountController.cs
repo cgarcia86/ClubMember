@@ -9,9 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ClubMember.Models;
-using WebDesignTest.Models;
 using System.Runtime.Caching;
 using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ClubMember.Controllers
 {
@@ -20,6 +20,10 @@ namespace ClubMember.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        ApplicationDbContext context = new ApplicationDbContext();
+        
+        
 
         //Cache to save user info
         ObjectCache cacheSlot = MemoryCache.Default;
@@ -192,6 +196,19 @@ namespace ClubMember.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+
+
+                    //Create User Profile
+                    RegularMember RegUsr = new RegularMember
+                    {
+                        BirthDate = null,
+                        Usrid = user.Id,
+                        profilePic = ""
+                    };
+
+                    context.RegUsr.Add(RegUsr);
+                    context.SaveChanges();
+
 
                     return RedirectToAction("Index", "Home");
                 }

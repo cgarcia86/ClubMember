@@ -9,8 +9,8 @@ namespace ClubMember.ViewModels
 {
     public class RegUsrProfileViewModel
     {
-        RegularMember RegMember { get; set; }
+        public RegularMember RegMember { get; set; }
 
-        ApplicationUser RegUsr { get; set; }
+        public ApplicationUser RegUsr { get; set; }
     }
 }

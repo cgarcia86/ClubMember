@@ -238,6 +238,7 @@
     <Content Include="Content\bootstrap3-Darkly.css" />
     <Content Include="Content\bootstrap3-slate.css" />
     <Content Include="Content\bootstrap3-Superhero.css" />
+    <Content Include="Content\img_avatar1.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -297,11 +298,12 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Home\_AdminMenuPartial.cshtml" />
     <Content Include="Views\Admin\AssignRole.cshtml" />
+    <Content Include="Views\Home\ViewMemberInfo.cshtml" />
+    <Content Include="Views\RegularMember\ViewUserProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\HomePageSettings\" />
-    <Folder Include="Views\RegularMember\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

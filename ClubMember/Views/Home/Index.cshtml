@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
+@model ClubMember.ViewModels.RegUsrProfileViewModel
+
 
 @{
     ViewBag.Title = "Home Page";
@@ -7,7 +9,7 @@
 
     <div class="jumbotron text-center" style="background-color:rgba(0,0,0,0.5); margin-top:50px">
         <h1>Your Club Member</h1>
-        <p class="lead text-success">Welcome  @User.Identity.GetUserName().</p>
+        <p class="lead text-success">Welcome  @User.Identity.GetUserName()</p>
         @{
             if (!Request.IsAuthenticated)
             {
@@ -30,7 +32,9 @@
             <div class="col-md-4">
                 <h2>User Profile</h2>
                 <p>See you profile Information.</p>
-                <p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>
+                @*<p class="btn btn-default">@Html.ActionLink("Register", "Register", "Account")</p>*@
+                 <p class="btn btn-default">@Html.ActionLink("Profile", "ViewUserProfile", "RegularMember",new { id = User.Identity.GetUserId() }, null)</p>
+
             </div>
             <div class="col-md-4">
                 <h2>Your Club Settings</h2>

@@ -9,7 +9,7 @@ using System.Linq;
 using System.Runtime.Caching;
 using System.Web;
 using System.Web.Mvc;
-using WebDesignTest.Models;
+
 
 namespace ClubMember.Controllers
 {
@@ -34,7 +34,7 @@ namespace ClubMember.Controllers
         [HttpPost]
         public ActionResult AddRegularMember(RegularMember member)
         {
-            member.ID = Guid.NewGuid().ToString();
+           // member.ID = Guid.NewGuid().ToString();
             //listRegMembers.Add(member);
             //SavecacheSlot();
 
